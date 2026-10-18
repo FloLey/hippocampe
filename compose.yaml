@@ -1,0 +1,33 @@
+# One-command deployment: the wiki plus Caddy for HTTPS.
+#   cp .env.example .env   # then fill it in
+#   docker compose up -d --build
+services:
+  wiki:
+    build: .
+    env_file: .env
+    environment:
+      WIKI_ROOT: /srv/wiki
+      WIKI_VAULT_ROOT: /srv/vault
+    volumes:
+      - wiki:/srv/wiki     # the memory itself (markdown + git history)
+      - vault:/srv/vault   # encrypted secrets, bot and sync state
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      WIKI_DOMAIN: ${WIKI_DOMAIN}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data   # certificates
+    depends_on:
+      - wiki
+    restart: unless-stopped
+
+volumes:
+  wiki:
+  vault:
+  caddy_data:

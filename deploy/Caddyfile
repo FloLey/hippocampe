@@ -1,0 +1,4 @@
+# Caddy gets and renews the HTTPS certificate for the domain on its own.
+{$WIKI_DOMAIN} {
+	reverse_proxy wiki:8765
+}
