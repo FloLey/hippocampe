@@ -131,3 +131,9 @@ def test_old_addresses_redirect(client):
         r = client.get(old)
         assert r.status_code in (302, 307), old
         assert r.headers["location"] == new, old
+
+
+def test_logo_is_served(client):
+    r = client.get("/ui/logo.png")
+    assert r.status_code == 200 and r.headers["content-type"] == "image/png"
+    assert r.content.startswith(b"\x89PNG")

@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import secrets
 import time
+from pathlib import Path
 from urllib.parse import urlencode
 
 import httpx
@@ -134,6 +135,12 @@ def register_ui(
     base = public_url.rstrip("/")
     callback_url = f"{base}/ui/auth/callback"
     ctx = Ctx(secret_key, auth_disabled, base)
+
+    logo = (Path(__file__).parent / "logo.png").read_bytes()
+
+    @mcp.custom_route("/ui/logo.png", methods=["GET"])
+    async def ui_logo(request: Request) -> Response:
+        return Response(logo, media_type="image/png", headers={"Cache-Control": "public, max-age=86400"})
 
     @mcp.custom_route("/ui/login", methods=["GET"])
     async def ui_login(request: Request) -> Response:

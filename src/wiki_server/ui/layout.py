@@ -60,9 +60,8 @@ def _verify(secret: str, token: str | None) -> dict | None:
 # Words and dates
 # ----------------------------------------------------------------------------
 
-# The hippocampus (a seahorse) under a crescent moon: memory sorted at night.
-LOGO_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a7fd0"/><stop offset="1" stop-color="#9b6fd6"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#hg)"/><path d="M14.5 9a6.5 6.5 0 1 0 7.2 8.4a5 5 0 1 1 -7.2 -8.4z" fill="#fff" opacity=".92"/><circle cx="23.5" cy="27" r="1" fill="#fff" opacity=".6"/><circle cx="16" cy="31" r=".75" fill="#fff" opacity=".45"/><g fill="#fff"><path d="M32.5 19.5 C 26 25, 26.5 36.5, 35 42.5 L 40.5 42 C 47.5 36, 48.5 23.5, 41.5 15.5 Z"/><circle cx="36.5" cy="14.5" r="5.6"/><path d="M32.6 12.6 L 23.4 18.2 Q 22.4 19.6 23.9 20.2 L 33.8 18.4 Z"/><path d="M36 9.3 L 37.6 5.6 L 40 9.8 Z"/><path d="M45.2 24.5 L 50.5 27.2 L 49.6 30.4 L 46 32.5 Z"/></g><path d="M38 41 C 39.5 47.5, 37.5 53.5, 32.5 53.5 C 28.8 53.5, 28.2 48.6, 31.8 48.4" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="36.2" cy="13.8" r="1.3" fill="#5b6fd0"/><g fill="none" stroke="#7d76d4" stroke-width="1" stroke-linecap="round" opacity=".55"><path d="M29.5 27.5 Q 33 28.8 36 27.6"/><path d="M29.4 32 Q 33 33.4 36.5 32"/><path d="M30.6 36.5 Q 34 37.8 37.5 36.4"/></g></svg>'
-LOGO_ICON = "data:image/svg+xml," + quote(LOGO_SVG)
+# The logo, a seahorse curled into a crescent moon (served by the console).
+LOGO_URL = "/ui/logo.png"
 
 CATEGORIES = [  # (folder, label, one-line description), in display order
     ("self", "Moi", "Qui tu es, ta vie, tes repères"),
@@ -260,10 +259,10 @@ def page(title: str, body: str, *, section: str = "", login: str | None = None,
         "<!doctype html><html lang='fr'><head><meta charset='utf-8'>"
         "<meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>"
         "<meta name='color-scheme' content='light dark'>"
-        f"<link rel='icon' href='{LOGO_ICON}'>"
+        f"<link rel='icon' href='{LOGO_URL}'>"
         f"<title>{esc(title)} · Mémoire</title><style>{CSS}</style></head>"
         f"<body{' class=authed' if login else ''}><div class='topbar'><div class='inner'>"
-        f"<a class='brand' href='/ui'><span class='logo' aria-hidden='true'>{LOGO_SVG}</span>Mémoire</a>"
+        f"<a class='brand' href='/ui'><img class='logo' src='{LOGO_URL}' alt=''>Mémoire</a>"
         f"{nav}</div></div>"
         f"<main{' class=wide' if wide else ''}>{banner}{body}</main></body></html>"
     )
@@ -306,8 +305,7 @@ small, .muted { color: var(--muted); font-size: .86rem; }
 .topbar .inner { max-width: 980px; margin: 0 auto; padding: .65rem 1.25rem; display: flex; align-items: center; gap: 1.25rem; }
 .brand { font-weight: 700; color: var(--ink); letter-spacing: -.01em; display: flex; align-items: center; gap: .5rem; }
 .brand:hover { text-decoration: none; }
-.brand .logo { width: 1.6rem; height: 1.6rem; display: flex; }
-.brand .logo svg { width: 100%; height: 100%; }
+.brand .logo { width: 1.75rem; height: 1.75rem; }
 .mainnav { display: flex; gap: .25rem; }
 .mainnav a { display: flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border-radius: 999px; color: var(--muted); font-size: .93rem; font-weight: 500; }
 .mainnav a:hover { color: var(--ink); text-decoration: none; background: color-mix(in srgb, var(--ink) 5%, transparent); }
