@@ -57,8 +57,10 @@ About half an hour, most of it waiting for DNS. The console is in French.
   `memoire.example.com`;
 - a GitHub account (it is how you log in);
 - a Claude plan that allows custom connectors;
-- optionally an Anthropic API key for the nightly dream (the console shows what
-  each night costs). Everything else works without it.
+- an Anthropic API key (console.anthropic.com). The nightly dream needs it to
+  turn your notes into pages; without it, notes pile up and are never sorted.
+  It is billed per use, separately from a Claude subscription, and the console
+  shows what each night costs.
 
 **1. Get the code on the server**
 
@@ -78,7 +80,7 @@ Then generate a client secret. Keep the client ID and the secret for step 3.
 
 **3. Fill in `.env`.** Each line is explained in the file: your domain, your
 GitHub login (the only account let in), the OAuth app, a random signing key,
-the vault key and, if you have one, the Anthropic key. Keep a copy of the vault
+the vault key and the Anthropic key. Keep a copy of the vault
 key somewhere safe: without it, the stored secrets cannot be read back.
 
 **4. Start it**
@@ -341,7 +343,7 @@ the wiki stays private to its owner. The browser console uses the same OAuth app
 | `WIKI_PUBLIC_URL` | prod | the public base URL of the server, e.g. `https://YOUR_DOMAIN` |
 | `WIKI_ALLOWED_GITHUB_LOGIN` | yes (prod) | the single GitHub login allowed to use the wiki |
 | `WIKI_JWT_SIGNING_KEY` | recommended | stable random value so tokens survive restarts |
-| `ANTHROPIC_API_KEY` | for the dream | the model calls in the consolidation pipeline |
+| `ANTHROPIC_API_KEY` | yes | the nightly dream, which turns notes into pages |
 | `WIKI_DREAM_MODEL` (+ `_TRIAGE`/`_DECIDE`/`_WRITE`) | no | dream model overrides |
 | `WIKI_ROOT` | no | where the wiki lives (default `/srv/wiki`) |
 | `WIKI_VAULT_KEY` | recommended | Fernet key of the secrets vault; without it secrets are only masked |
